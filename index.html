@@ -5,15 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>John Marvian Caranto | Portfolio</title>
   <style>
-    :root {
-      --black: #050208;
-      --purple: #a855f7;
-      --purple-dark: #6d28d9;
-      --purple-light: #d8b4fe;
-      --card: rgba(18, 12, 28, 0.72);
-      --border: rgba(168, 85, 247, 0.28);
-    }
-
     * {
       margin: 0;
       padding: 0;
@@ -25,23 +16,22 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 24px;
-      background: var(--black);
+      padding: 30px;
+      background: #050208;
       color: #fff;
       font-family: "Segoe UI", system-ui, Arial, sans-serif;
       overflow-x: hidden;
     }
 
-    .bg {
+    .background {
       position: fixed;
       inset: -20%;
       z-index: -2;
       background:
-        radial-gradient(circle at 15% 25%, rgba(168, 85, 247, .38), transparent 42%),
-        radial-gradient(circle at 85% 75%, rgba(109, 40, 217, .42), transparent 45%),
-        radial-gradient(circle at 50% 50%, rgba(88, 28, 135, .25), transparent 55%),
+        radial-gradient(circle at 15% 25%, rgba(168, 85, 247, 0.38), transparent 42%),
+        radial-gradient(circle at 85% 75%, rgba(109, 40, 217, 0.42), transparent 45%),
         #050208;
-      animation: bgMove 18s ease-in-out infinite alternate;
+      animation: moveBackground 18s ease-in-out infinite alternate;
     }
 
     .grid {
@@ -49,88 +39,91 @@
       inset: 0;
       z-index: -1;
       background-image:
-        linear-gradient(rgba(168, 85, 247, .07) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(168, 85, 247, .07) 1px, transparent 1px);
+        linear-gradient(rgba(168, 85, 247, 0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(168, 85, 247, 0.07) 1px, transparent 1px);
       background-size: 45px 45px;
       mask-image: radial-gradient(circle at center, black 25%, transparent 75%);
     }
 
-    @keyframes bgMove {
-      0% { transform: translate3d(0, 0, 0) scale(1); }
-      100% { transform: translate3d(-35px, 30px, 0) scale(1.12); }
+    @keyframes moveBackground {
+      0% {
+        transform: translate3d(0, 0, 0) scale(1);
+      }
+      100% {
+        transform: translate3d(-35px, 30px, 0) scale(1.12);
+      }
     }
 
-    .card {
-      width: min(760px, 100%);
-      padding: 48px 34px;
-      text-align: center;
-      border-radius: 28px;
-      background: var(--card);
-      border: 1px solid var(--border);
+    .container {
+      width: min(900px, 100%);
+      display: flex;
+      align-items: center;
+      gap: 45px;
+      padding: 45px;
+      border-radius: 30px;
+      background: rgba(18, 12, 28, 0.72);
+      border: 1px solid rgba(168, 85, 247, 0.28);
       box-shadow:
-        0 0 0 1px rgba(255,255,255,.03),
-        0 25px 70px rgba(0,0,0,.55),
-        0 0 60px rgba(168,85,247,.16);
+        0 25px 70px rgba(0, 0, 0, 0.55),
+        0 0 60px rgba(168, 85, 247, 0.16);
       backdrop-filter: blur(16px);
-      animation: rise .9s cubic-bezier(.2,.8,.2,1) both;
+      animation: fadeIn 1s ease-out both;
     }
 
-    @keyframes rise {
-      from { opacity: 0; transform: translateY(40px) scale(.98); }
-      to { opacity: 1; transform: translateY(0) scale(1); }
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(35px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
-    .profile-wrap {
+    .picture-frame {
       position: relative;
-      width: 175px;
-      height: 175px;
-      margin: 0 auto 28px;
+      flex-shrink: 0;
+      width: 300px;
+      height: 360px;
+      border-radius: 28px;
+      overflow: hidden;
+      border: 2px solid rgba(168, 85, 247, 0.55);
+      box-shadow:
+        0 0 35px rgba(168, 85, 247, 0.35),
+        0 20px 50px rgba(0, 0, 0, 0.5);
+      animation: glow 4s ease-in-out infinite;
     }
 
-    .profile-wrap::before {
-      content: "";
-      position: absolute;
-      inset: -9px;
-      border-radius: 50%;
-      background: conic-gradient(from 0deg, #a855f7, #6d28d9, #d8b4fe, #a855f7);
-      animation: spin 6s linear infinite;
-      filter: blur(1px);
-      opacity: .9;
-    }
-
-    .profile-picture {
-      position: relative;
+    .picture-frame img {
       width: 100%;
       height: 100%;
-      border-radius: 50%;
       object-fit: cover;
-      border: 5px solid #0a0510;
       display: block;
-      transition: transform .35s ease, box-shadow .35s ease;
+      transition: transform 0.4s ease;
     }
 
-    .profile-picture:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 35px rgba(168,85,247,.65);
+    .picture-frame:hover img {
+      transform: scale(1.06);
     }
 
-    @keyframes spin {
-      to { transform: rotate(360deg); }
+    @keyframes glow {
+      0%, 100% {
+        box-shadow:
+          0 0 25px rgba(168, 85, 247, 0.30),
+          0 20px 50px rgba(0, 0, 0, 0.5);
+      }
+      50% {
+        box-shadow:
+          0 0 50px rgba(168, 85, 247, 0.55),
+          0 20px 50px rgba(0, 0, 0, 0.5);
+      }
     }
 
-    .intro {
-      font-size: .82rem;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: var(--purple-light);
-      margin-bottom: 14px;
-    }
-
-    h1 {
-      font-size: clamp(2.2rem, 7vw, 3.4rem);
+    .name {
+      font-size: clamp(2.4rem, 7vw, 4rem);
       line-height: 1.1;
-      margin-bottom: 16px;
-      background: linear-gradient(90deg, #fff, #c084fc, #a855f7, #fff);
+      background: linear-gradient(90deg, #ffffff, #c084fc, #a855f7, #ffffff);
       background-size: 250%;
       -webkit-background-clip: text;
       background-clip: text;
@@ -139,105 +132,34 @@
     }
 
     @keyframes shine {
-      to { background-position: 250%; }
+      to {
+        background-position: 250%;
+      }
     }
 
-    .typing {
-      min-height: 28px;
-      color: #e9d5ff;
-      font-size: 1.05rem;
-      margin-bottom: 30px;
-    }
+    @media (max-width: 720px) {
+      .container {
+        flex-direction: column;
+        text-align: center;
+        padding: 35px 22px;
+        gap: 30px;
+      }
 
-    .cursor {
-      display: inline-block;
-      width: 2px;
-      height: 1.1em;
-      margin-left: 3px;
-      background: var(--purple);
-      vertical-align: text-bottom;
-      animation: blink .8s steps(2, start) infinite;
-    }
-
-    @keyframes blink {
-      50% { opacity: 0; }
-    }
-
-    .buttons {
-      display: flex;
-      gap: 12px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      padding: 12px 22px;
-      border-radius: 999px;
-      font-size: .95rem;
-      font-weight: 600;
-      text-decoration: none;
-      border: 1px solid var(--border);
-      color: #fff;
-      background: rgba(168,85,247,.12);
-      transition: transform .25s ease, background .25s ease, box-shadow .25s ease;
-    }
-
-    .btn:hover {
-      transform: translateY(-3px);
-      background: rgba(168,85,247,.25);
-      box-shadow: 0 10px 30px rgba(168,85,247,.28);
-    }
-
-    .btn.primary {
-      background: linear-gradient(135deg, #a855f7, #6d28d9);
-      border-color: transparent;
-    }
-
-    .divider {
-      height: 1px;
-      margin: 34px auto 0;
-      width: 70%;
-      background: linear-gradient(90deg, transparent, rgba(168,85,247,.65), transparent);
-    }
-
-    .future {
-      display: none;
-      margin-top: 34px;
-      text-align: left;
-    }
-
-    .future h2 {
-      color: var(--purple-light);
-      font-size: 1.15rem;
-      margin: 24px 0 10px;
-    }
-
-    .future p,
-    .future li {
-      color: #d1d5db;
-      line-height: 1.7;
-    }
-
-    .future ul {
-      padding-left: 20px;
-    }
-
-    @media (max-width: 520px) {
-      .card { padding: 38px 20px; }
-      .profile-wrap { width: 150px; height: 150px; }
+      .picture-frame {
+        width: min(280px, 85vw);
+        height: 340px;
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .bg,
-      .profile-wrap::before,
-      h1,
-      .cursor,
-      .card {
+      .background,
+      .container,
+      .picture-frame,
+      .name {
         animation: none;
       }
 
-      .btn,
-      .profile-picture {
+      .picture-frame img {
         transition: none;
       }
     }
@@ -245,96 +167,19 @@
 </head>
 <body>
 
-  <div class="bg"></div>
+  <div class="background"></div>
   <div class="grid"></div>
 
-  <main class="card">
-    <div class="profile-wrap">
+  <main class="container">
+    <div class="picture-frame">
       <img
         src="profile.jpg"
         alt="John Marvian Caranto"
-        class="profile-picture"
       >
     </div>
 
-    <p class="intro">Welcome to my portfolio</p>
-    <h1>John Marvian Caranto</h1>
-
-    <p class="typing">
-      <span id="typed"></span><span class="cursor"></span>
-    </p>
-
-    <div class="buttons">
-      <a href="#about" class="btn primary">About Me</a>
-      <a href="#projects" class="btn">Projects</a>
-      <a href="#contact" class="btn">Contact</a>
-    </div>
-
-    <div class="divider"></div>
-
-    <!-- ADD DETAILS HERE LATER -->
-    <section class="future" id="about">
-      <h2>About Me</h2>
-      <p>Write your introduction here.</p>
-    </section>
-
-    <section class="future" id="projects">
-      <h2>Projects</h2>
-      <ul>
-        <li>Project 1 — description</li>
-        <li>Project 2 — description</li>
-      </ul>
-    </section>
-
-    <section class="future" id="skills">
-      <h2>Skills</h2>
-      <p>Add your skills here.</p>
-    </section>
-
-    <section class="future" id="contact">
-      <h2>Contact</h2>
-      <p>Add your email and social links here.</p>
-    </section>
+    <h1 class="name">John Marvian Caranto</h1>
   </main>
-
-  <script>
-    const words = [
-      "Student",
-      "Future Web Developer",
-      "Creative Thinker",
-      "Welcome to My Portfolio"
-    ];
-
-    const typed = document.getElementById("typed");
-    let wordIndex = 0;
-    let letterIndex = 0;
-    let deleting = false;
-
-    function type() {
-      const word = words[wordIndex];
-
-      if (!deleting) {
-        typed.textContent = word.slice(0, ++letterIndex);
-
-        if (letterIndex === word.length) {
-          deleting = true;
-          setTimeout(type, 1600);
-          return;
-        }
-      } else {
-        typed.textContent = word.slice(0, --letterIndex);
-
-        if (letterIndex === 0) {
-          deleting = false;
-          wordIndex = (wordIndex + 1) % words.length;
-        }
-      }
-
-      setTimeout(type, deleting ? 45 : 90);
-    }
-
-    type();
-  </script>
 
 </body>
 </html>
