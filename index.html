@@ -23,7 +23,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 40px 6vw;
+            padding: 60px 6vw;
             background: linear-gradient(120deg, #050507, #14082b, #07030f, #1d0b3d, #050507);
             background-size: 300% 300%;
             animation: bgShift 18s ease-in-out infinite;
@@ -32,13 +32,22 @@
             position: relative;
         }
  
-        /* ---------- Animated background layers ---------- */
+        /* =====================================================
+           BACKGROUND (far layers)
+           ===================================================== */
         .bg {
             position: fixed;
             inset: 0;
             z-index: 0;
             pointer-events: none;
             overflow: hidden;
+        }
+ 
+        /* Wrapper that the script moves for the mouse-parallax depth effect */
+        .px {
+            position: absolute;
+            inset: 0;
+            will-change: transform;
         }
  
         .orb {
@@ -77,6 +86,22 @@
             animation: drift3 24s ease-in-out infinite alternate;
         }
  
+        /* Huge outlined word far behind everything */
+        .ghost {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            font-size: min(26vw, 380px);
+            font-weight: 900;
+            letter-spacing: 0.04em;
+            white-space: nowrap;
+            color: transparent;
+            -webkit-text-stroke: 1.5px rgba(168, 85, 247, 0.22);
+            animation: ghostDrift 14s ease-in-out infinite alternate;
+            user-select: none;
+        }
+ 
         .grid {
             position: absolute;
             inset: 0;
@@ -87,6 +112,75 @@
             -webkit-mask-image: radial-gradient(circle at center, #000 25%, transparent 75%);
             mask-image: radial-gradient(circle at center, #000 25%, transparent 75%);
             animation: gridMove 12s linear infinite;
+        }
+ 
+        /* Floating shapes at different depths */
+        .shape {
+            position: absolute;
+        }
+ 
+        .s-ring {
+            top: 14%;
+            left: 47%;
+            width: 84px;
+            height: 84px;
+            border: 2px solid rgba(192, 132, 252, 0.55);
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.35),
+                        inset 0 0 20px rgba(168, 85, 247, 0.25);
+            animation: floatSpin 9s ease-in-out infinite;
+        }
+ 
+        .s-diamond {
+            top: 72%;
+            left: 6%;
+            width: 46px;
+            height: 46px;
+            border: 2px solid rgba(216, 180, 254, 0.5);
+            box-shadow: 0 0 16px rgba(168, 85, 247, 0.3);
+            animation: diamondFloat 11s ease-in-out infinite alternate;
+        }
+ 
+        .s-plus {
+            top: 20%;
+            right: 7%;
+            width: 34px;
+            height: 34px;
+            animation: floatSpin 13s ease-in-out infinite;
+        }
+ 
+        .s-plus::before,
+        .s-plus::after {
+            content: "";
+            position: absolute;
+            background: rgba(216, 180, 254, 0.65);
+            border-radius: 2px;
+        }
+ 
+        .s-plus::before {
+            left: 0;
+            right: 0;
+            top: 50%;
+            height: 3px;
+            margin-top: -1.5px;
+        }
+ 
+        .s-plus::after {
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 3px;
+            margin-left: -1.5px;
+        }
+ 
+        .s-dots {
+            bottom: 12%;
+            right: 12%;
+            width: 60px;
+            height: 20px;
+            background: radial-gradient(circle, #c084fc 3px, transparent 4px) 0 0 / 20px 20px repeat-x;
+            filter: drop-shadow(0 0 6px #a855f7);
+            animation: floatY 7s ease-in-out infinite;
         }
  
         /* Mouse spotlight (desktop) */
@@ -116,7 +210,6 @@
             animation: rise linear infinite;
         }
  
-        /* Shooting stars */
         .star {
             position: absolute;
             top: var(--t);
@@ -130,10 +223,80 @@
             animation: shoot 8s ease-out infinite;
         }
  
+        /* =====================================================
+           FOREGROUND (close layers, blurred like a camera lens)
+           ===================================================== */
+        .fg {
+            position: fixed;
+            inset: 0;
+            z-index: 3;
+            pointer-events: none;
+            overflow: hidden;
+        }
+ 
+        .bokeh {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(
+                circle at 35% 30%,
+                rgba(233, 213, 255, 0.55),
+                rgba(168, 85, 247, 0.18) 60%,
+                transparent 72%
+            );
+            opacity: 0.5;
+            animation: floatY 9s ease-in-out infinite;
+        }
+ 
+        .bokeh.b1 {
+            width: 130px;
+            height: 130px;
+            bottom: 6%;
+            left: 3%;
+            filter: blur(5px);
+        }
+ 
+        .bokeh.b2 {
+            width: 80px;
+            height: 80px;
+            top: 10%;
+            right: 30%;
+            filter: blur(4px);
+            animation-duration: 11s;
+        }
+ 
+        .bokeh.b3 {
+            width: 180px;
+            height: 180px;
+            bottom: -50px;
+            right: 18%;
+            filter: blur(9px);
+            animation-duration: 13s;
+        }
+ 
+        /* Dark edges + film grain over everything */
+        .overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 4;
+            pointer-events: none;
+            overflow: hidden;
+            background: radial-gradient(ellipse at center, transparent 55%, rgba(0, 0, 0, 0.6) 100%);
+        }
+ 
+        .overlay::after {
+            content: "";
+            position: absolute;
+            inset: -50%;
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='.5'/></svg>");
+            opacity: 0.07;
+            mix-blend-mode: overlay;
+            animation: grain 0.9s steps(5) infinite;
+        }
+ 
         /* Click sparks */
         .spark {
             position: fixed;
-            z-index: 5;
+            z-index: 7;
             width: 7px;
             height: 7px;
             border-radius: 50%;
@@ -143,7 +306,42 @@
             animation: burst 0.8s ease-out forwards;
         }
  
-        /* ---------- Layout ---------- */
+        /* Custom cursor (desktop only, switched on by the script) */
+        .cursor-ring,
+        .cursor-dot {
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            border-radius: 50%;
+            display: none;
+        }
+ 
+        .cursor-ring {
+            width: 38px;
+            height: 38px;
+            z-index: 9;
+            border: 1.5px solid rgba(192, 132, 252, 0.8);
+            transition: scale 0.25s ease, background 0.25s ease;
+        }
+ 
+        .cursor-ring.big {
+            scale: 1.9;
+            background: rgba(168, 85, 247, 0.15);
+        }
+ 
+        .cursor-dot {
+            width: 6px;
+            height: 6px;
+            margin: -3px 0 0 -3px;
+            z-index: 9;
+            background: #e9d5ff;
+            box-shadow: 0 0 10px #c084fc;
+        }
+ 
+        /* =====================================================
+           MAIN LAYOUT
+           ===================================================== */
         .profile {
             position: relative;
             z-index: 2;
@@ -155,10 +353,58 @@
             gap: 6vw;
         }
  
-        /* ---------- Picture (left, big) ---------- */
-        .photo-wrap {
+        /* ---------- Photo stage (left, big) ---------- */
+        .stage {
             flex: 0 0 auto;
             width: min(46vw, 520px);
+            position: relative;
+        }
+ 
+        /* Rotating rings behind the photo */
+        .orbit {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 128%;
+            aspect-ratio: 1;
+            border-radius: 50%;
+            border: 1.5px dashed rgba(168, 85, 247, 0.3);
+            z-index: 0;
+            animation: orbitSpin 40s linear infinite;
+        }
+ 
+        .orbit::before {
+            content: "";
+            position: absolute;
+            top: -6px;
+            left: 50%;
+            width: 12px;
+            height: 12px;
+            margin-left: -6px;
+            border-radius: 50%;
+            background: #e9d5ff;
+            box-shadow: 0 0 14px 4px rgba(192, 132, 252, 0.9);
+        }
+ 
+        .orbit.two {
+            width: 112%;
+            border: 1.5px dotted rgba(192, 132, 252, 0.22);
+            animation: orbitSpinRev 28s linear infinite;
+        }
+ 
+        .orbit.two::before {
+            width: 8px;
+            height: 8px;
+            margin-left: -4px;
+            top: -4px;
+            background: #a855f7;
+            box-shadow: 0 0 12px 3px rgba(139, 92, 246, 0.9);
+        }
+ 
+        .photo-wrap {
+            position: relative;
+            z-index: 1;
+            width: 100%;
             animation: popIn 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) backwards,
                        float 5s ease-in-out 1.2s infinite;
             perspective: 900px;
@@ -172,7 +418,68 @@
             padding: 6px;
             background: #0a0612;
             transform-style: preserve-3d;
-            transition: transform 0.15s ease-out;
+        }
+ 
+        /* Stacked cards behind the photo: they separate when the photo tilts */
+        .layer {
+            position: absolute;
+            inset: 0;
+            border-radius: 32px;
+            pointer-events: none;
+        }
+ 
+        .layer.l1 {
+            transform: translateZ(-50px) translate(22px, 22px) rotate(2.5deg);
+            border: 1.5px solid rgba(168, 85, 247, 0.55);
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(10, 6, 18, 0.5));
+        }
+ 
+        .layer.l2 {
+            transform: translateZ(-100px) translate(44px, 44px) rotate(5deg);
+            border: 1.5px solid rgba(168, 85, 247, 0.3);
+            background: linear-gradient(135deg, rgba(91, 33, 182, 0.18), rgba(10, 6, 18, 0.4));
+        }
+ 
+        /* Little badges floating in front of the photo */
+        .chip {
+            position: absolute;
+            pointer-events: none;
+        }
+ 
+        .chip.c1 {
+            top: -20px;
+            right: -20px;
+            width: 68px;
+            height: 68px;
+            transform: translateZ(80px);
+        }
+ 
+        .chip.c2 {
+            bottom: 40px;
+            left: -22px;
+            width: 40px;
+            height: 40px;
+            transform: translateZ(60px);
+        }
+ 
+        .chip i {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+ 
+        .chip.c1 i {
+            border-radius: 50%;
+            border: 2px dashed rgba(233, 213, 255, 0.85);
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.7), inset 0 0 14px rgba(168, 85, 247, 0.5);
+            animation: chipSpin 8s linear infinite;
+        }
+ 
+        .chip.c2 i {
+            border: 2px solid rgba(216, 180, 254, 0.9);
+            background: rgba(168, 85, 247, 0.25);
+            box-shadow: 0 0 18px rgba(168, 85, 247, 0.8);
+            animation: diamondFloat 6s ease-in-out infinite alternate;
         }
  
         .picture-frame::before {
@@ -214,7 +521,6 @@
             animation: imgReveal 1.6s cubic-bezier(0.2, 0.8, 0.2, 1) 0.2s backwards;
         }
  
-        /* Shine that sweeps across the photo now and then */
         .picture-frame .shine {
             position: absolute;
             inset: 6px;
@@ -235,18 +541,37 @@
             animation: shineSweep 6s ease-in-out 2s infinite;
         }
  
+        /* Soft shadow on the "floor" that shrinks as the photo floats up */
+        .ground {
+            position: absolute;
+            left: 10%;
+            right: 10%;
+            bottom: -48px;
+            height: 30px;
+            border-radius: 50%;
+            background: radial-gradient(ellipse, rgba(139, 92, 246, 0.6), transparent 70%);
+            filter: blur(12px);
+            animation: fadeIn 2s ease 0.6s backwards,
+                       shadowPulse 5s ease-in-out 1.2s infinite;
+        }
+ 
         /* ---------- Name (right) ---------- */
         .name {
             flex: 1;
+            will-change: transform;
         }
  
         h1 {
+            --ext: 1px 1px 0 #3b1a73, 2px 2px 0 #341666, 3px 3px 0 #2d1258,
+                   4px 4px 0 #260f4a, 5px 5px 0 #1f0c3c;
             color: #ffffff;
             font-size: clamp(40px, 7vw, 92px);
             font-weight: 800;
             line-height: 1.05;
             letter-spacing: 1px;
-            text-shadow: 0 0 25px rgba(168, 85, 247, 0.55);
+            text-shadow: var(--ext),
+                         0 0 30px rgba(168, 85, 247, 0.5),
+                         8px 14px 26px rgba(0, 0, 0, 0.55);
         }
  
         h1 span.line {
@@ -258,7 +583,6 @@
             color: #c084fc;
         }
  
-        /* Each letter is wrapped by the script below */
         .letter {
             display: inline-block;
             transition: transform 0.25s ease, text-shadow 0.25s ease;
@@ -268,7 +592,9 @@
  
         .letter:hover {
             transform: translateY(-12px) scale(1.18);
-            text-shadow: 0 0 30px rgba(216, 180, 254, 1);
+            text-shadow: var(--ext),
+                         0 0 36px rgba(216, 180, 254, 1),
+                         10px 22px 30px rgba(0, 0, 0, 0.5);
         }
  
         .last .letter {
@@ -289,7 +615,9 @@
                        barFlow 3s linear 2.5s infinite;
         }
  
-        /* ---------- Keyframes ---------- */
+        /* =====================================================
+           KEYFRAMES
+           ===================================================== */
         @keyframes bgShift {
             0%, 100% { background-position: 0% 50%; }
             50%      { background-position: 100% 50%; }
@@ -299,8 +627,28 @@
         @keyframes drift2 { to { transform: translate(-200px, -120px) scale(1.2); } }
         @keyframes drift3 { to { transform: translate(-160px, 110px) scale(0.8); } }
  
+        @keyframes ghostDrift {
+            from { transform: translate(calc(-50% - 40px), -50%); }
+            to   { transform: translate(calc(-50% + 40px), -50%); }
+        }
+ 
         @keyframes gridMove {
             to { background-position: 60px 60px; }
+        }
+ 
+        @keyframes floatSpin {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50%      { transform: translateY(-24px) rotate(180deg); }
+        }
+ 
+        @keyframes diamondFloat {
+            from { transform: rotate(45deg) translateY(0); }
+            to   { transform: rotate(225deg) translateY(-30px); }
+        }
+ 
+        @keyframes floatY {
+            0%, 100% { transform: translateY(0); }
+            50%      { transform: translateY(-20px); }
         }
  
         @keyframes rise {
@@ -317,6 +665,15 @@
             100% { transform: rotate(-35deg) translateX(-900px); opacity: 0; }
         }
  
+        @keyframes grain {
+            0%   { transform: translate(0, 0); }
+            20%  { transform: translate(-6%, 4%); }
+            40%  { transform: translate(5%, -7%); }
+            60%  { transform: translate(-4%, -3%); }
+            80%  { transform: translate(7%, 6%); }
+            100% { transform: translate(0, 0); }
+        }
+ 
         @keyframes burst {
             from {
                 transform: translate(-50%, -50%) scale(1);
@@ -326,6 +683,11 @@
                 transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(0);
                 opacity: 0;
             }
+        }
+ 
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to   { opacity: 1; }
         }
  
         @keyframes popIn {
@@ -356,6 +718,25 @@
             0%   { left: -60%; }
             30%  { left: 130%; }
             100% { left: 130%; }
+        }
+ 
+        @keyframes orbitSpin {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to   { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+ 
+        @keyframes orbitSpinRev {
+            from { transform: translate(-50%, -50%) rotate(360deg); }
+            to   { transform: translate(-50%, -50%) rotate(0deg); }
+        }
+ 
+        @keyframes chipSpin {
+            to { transform: rotate(360deg); }
+        }
+ 
+        @keyframes shadowPulse {
+            0%, 100% { transform: scaleX(1); opacity: 0.9; }
+            50%      { transform: scaleX(0.8); opacity: 0.45; }
         }
  
         @keyframes letterIn {
@@ -396,19 +777,25 @@
             to   { opacity: 0.8; }
         }
  
-        /* ---------- Mobile ---------- */
+        /* =====================================================
+           MOBILE
+           ===================================================== */
         @media (max-width: 800px) {
             body {
-                padding: 30px 6vw;
+                padding: 40px 6vw 70px;
             }
  
             .profile {
                 flex-direction: column;
-                gap: 32px;
+                gap: 60px;
             }
  
-            .photo-wrap {
-                width: min(82vw, 420px);
+            .stage {
+                width: min(76vw, 400px);
+            }
+ 
+            .ghost {
+                font-size: 30vw;
             }
  
             h1 {
@@ -427,6 +814,14 @@
             .orb {
                 filter: blur(70px);
             }
+ 
+            .layer.l1 {
+                transform: translateZ(-50px) translate(14px, 14px) rotate(2.5deg);
+            }
+ 
+            .layer.l2 {
+                transform: translateZ(-100px) translate(28px, 28px) rotate(5deg);
+            }
         }
  
         @media (prefers-reduced-motion: reduce) {
@@ -439,20 +834,25 @@
                 width: 90px;
             }
  
-            .particle, .star, .spotlight {
-                display: none;
+            .particle, .star, .spotlight, .cursor-ring, .cursor-dot {
+                display: none !important;
             }
         }
     </style>
 </head>
 <body>
  
-    <!-- Animated background -->
+    <!-- Far background layers -->
     <div class="bg" aria-hidden="true">
-        <div class="orb one"></div>
-        <div class="orb two"></div>
-        <div class="orb three"></div>
+        <div class="px" data-depth="35"><div class="orb one"></div></div>
+        <div class="px" data-depth="-30"><div class="orb two"></div></div>
+        <div class="px" data-depth="55"><div class="orb three"></div></div>
+        <div class="px" data-depth="-22"><div class="ghost">CARANTO</div></div>
         <div class="grid"></div>
+        <div class="px" data-depth="45"><div class="shape s-ring"></div></div>
+        <div class="px" data-depth="70"><div class="shape s-diamond"></div></div>
+        <div class="px" data-depth="55"><div class="shape s-plus"></div></div>
+        <div class="px" data-depth="38"><div class="shape s-dots"></div></div>
         <div class="spotlight" id="spotlight"></div>
         <div class="star" style="--t: 8%;  --r: 10%; animation-delay: 1s;"></div>
         <div class="star" style="--t: 22%; --r: 35%; animation-delay: 4s;"></div>
@@ -461,14 +861,25 @@
     </div>
  
     <main class="profile">
-        <div class="photo-wrap">
-            <div class="picture-frame" id="frame">
-                <img src="profile.jpg" alt="Caranto John Marvian P">
-                <div class="shine"></div>
+        <div class="stage">
+            <div class="orbit"></div>
+            <div class="orbit two"></div>
+ 
+            <div class="photo-wrap">
+                <div class="picture-frame" id="frame">
+                    <div class="layer l2"></div>
+                    <div class="layer l1"></div>
+                    <img src="profile.jpg" alt="Caranto John Marvian P">
+                    <div class="shine"></div>
+                    <div class="chip c1"><i></i></div>
+                    <div class="chip c2"><i></i></div>
+                </div>
             </div>
+ 
+            <div class="ground"></div>
         </div>
  
-        <div class="name">
+        <div class="name" data-depth="14">
             <h1>
                 <span class="line last">Caranto</span>
                 <span class="line rest">John Marvian P</span>
@@ -476,6 +887,17 @@
             <div class="bar"></div>
         </div>
     </main>
+ 
+    <!-- Close layers in front of the content -->
+    <div class="fg" aria-hidden="true">
+        <div class="px" data-depth="80"><div class="bokeh b1"></div></div>
+        <div class="px" data-depth="95"><div class="bokeh b2"></div></div>
+        <div class="px" data-depth="70"><div class="bokeh b3"></div></div>
+    </div>
+ 
+    <div class="overlay" aria-hidden="true"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+    <div class="cursor-dot" id="cursorDot"></div>
  
     <script>
         // Split the name into letters so each one can animate
@@ -516,31 +938,73 @@
             }
         })();
  
-        // Photo tilt + mouse spotlight (desktop only)
+        // Depth: every layer moves a different amount with the mouse,
+        // the photo tilts in 3D, and the custom cursor follows smoothly (desktop only)
         (function () {
+            var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+            var canHover = window.matchMedia("(hover: hover)").matches;
+            if (reduce || !canHover) return;
+ 
             var frame = document.getElementById("frame");
             var spot = document.getElementById("spotlight");
-            var canHover = window.matchMedia("(hover: hover)").matches &&
-                           !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+            var ring = document.getElementById("cursorRing");
+            var dot = document.getElementById("cursorDot");
  
-            if (!canHover) return;
+            var items = [].slice.call(document.querySelectorAll("[data-depth]")).map(function (el) {
+                return { el: el, depth: parseFloat(el.getAttribute("data-depth")) };
+            });
+ 
+            var tx = 0, ty = 0;           // target (-1 to 1)
+            var cx = 0, cy = 0;           // smoothed
+            var mx = window.innerWidth / 2, my = window.innerHeight / 2;
+            var rx = mx, ry = my;
+ 
+            ring.style.display = "block";
+            dot.style.display = "block";
  
             document.addEventListener("mousemove", function (e) {
-                var x = (e.clientX / window.innerWidth - 0.5) * 2;
-                var y = (e.clientY / window.innerHeight - 0.5) * 2;
+                tx = (e.clientX / window.innerWidth - 0.5) * 2;
+                ty = (e.clientY / window.innerHeight - 0.5) * 2;
+                mx = e.clientX;
+                my = e.clientY;
  
-                frame.style.transform =
-                    "rotateY(" + (x * 8) + "deg) rotateX(" + (-y * 8) + "deg)";
- 
-                spot.style.setProperty("--mx", e.clientX + "px");
-                spot.style.setProperty("--my", e.clientY + "px");
+                dot.style.transform = "translate3d(" + mx + "px," + my + "px,0)";
+                spot.style.setProperty("--mx", mx + "px");
+                spot.style.setProperty("--my", my + "px");
                 spot.classList.add("on");
             });
  
-            document.addEventListener("mouseleave", function () {
-                frame.style.transform = "rotateY(0deg) rotateX(0deg)";
+            document.documentElement.addEventListener("mouseleave", function () {
+                tx = 0;
+                ty = 0;
                 spot.classList.remove("on");
             });
+ 
+            document.addEventListener("mouseover", function (e) {
+                ring.classList.toggle("big", !!e.target.closest(".letter, .picture-frame"));
+            });
+ 
+            function tick() {
+                cx += (tx - cx) * 0.08;
+                cy += (ty - cy) * 0.08;
+                rx += (mx - rx) * 0.16;
+                ry += (my - ry) * 0.16;
+ 
+                items.forEach(function (it) {
+                    it.el.style.transform =
+                        "translate3d(" + (cx * it.depth) + "px," + (cy * it.depth) + "px,0)";
+                });
+ 
+                frame.style.transform =
+                    "rotateY(" + (cx * 9) + "deg) rotateX(" + (-cy * 9) + "deg)";
+ 
+                ring.style.transform =
+                    "translate3d(" + rx + "px," + ry + "px,0) translate(-50%,-50%)";
+ 
+                requestAnimationFrame(tick);
+            }
+ 
+            tick();
         })();
  
         // Sparks burst out wherever you click or tap
