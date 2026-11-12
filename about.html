@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About | Caranto John Marvian P</title>
+    <title>Personal Info | Caranto John Marvian P</title>
  
     <style>
         * {
@@ -12,18 +12,21 @@
             box-sizing: border-box;
         }
  
-        html {
-            scroll-behavior: smooth;
+        /* No scrolling: the page is exactly one screen tall */
+        html,
+        body {
+            height: 100%;
+            overflow: hidden;
         }
  
         body {
-            min-height: 100vh;
+            height: 100vh;
+            height: 100dvh;
             background: linear-gradient(120deg, #050507, #14082b, #07030f, #1d0b3d, #050507);
             background-size: 300% 300%;
             animation: bgShift 18s ease-in-out infinite;
             font-family: Arial, Helvetica, sans-serif;
             color: #ffffff;
-            overflow-x: hidden;
             position: relative;
         }
  
@@ -138,7 +141,7 @@
             left: 50%;
             top: 50%;
             transform: translate(-50%, -50%);
-            font-size: min(30vw, 440px);
+            font-size: min(24vw, 360px);
             font-weight: 900;
             letter-spacing: 0.04em;
             white-space: nowrap;
@@ -250,17 +253,21 @@
         }
  
         /* =====================================================
-           PAGE CONTENT
+           PAGE CONTENT (fits exactly in one screen)
            ===================================================== */
         .page {
             position: relative;
             z-index: 2;
+            height: 100%;
             max-width: 1100px;
             margin: 0 auto;
-            padding: 130px 6vw 90px;
+            padding: 84px 6vw 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: clamp(12px, 3vh, 32px);
         }
  
-        /* Elements fade and slide in when you scroll to them */
         .reveal {
             opacity: 0;
             transform: translateY(40px);
@@ -275,14 +282,14 @@
         /* ---------- Hero ---------- */
         .tag {
             font-family: Consolas, "Courier New", monospace;
-            font-size: 15px;
+            font-size: 14px;
             letter-spacing: 2px;
             color: #a855f7;
-            margin-bottom: 14px;
+            margin-bottom: 8px;
         }
  
         .hero h1 {
-            font-size: clamp(38px, 9vw, 110px);
+            font-size: clamp(32px, min(7vw, 9vh), 76px);
             font-weight: 800;
             line-height: 1.05;
             letter-spacing: 1px;
@@ -303,28 +310,17 @@
             animation: blink 1s steps(1) infinite;
         }
  
-        .lead {
-            max-width: 640px;
-            margin-top: 26px;
-            font-size: clamp(16px, 2vw, 20px);
-            line-height: 1.65;
-            color: #cbb6f2;
-        }
- 
-        .lead strong {
-            color: #ffffff;
-        }
- 
         /* ---------- Terminal + Player card ---------- */
         .duo {
             display: grid;
-            grid-template-columns: 1.15fr 1fr;
-            gap: 36px;
-            margin-top: 70px;
-            align-items: start;
+            grid-template-columns: 1.1fr 1fr;
+            gap: 28px;
+            align-items: stretch;
+            min-height: 0;
         }
  
         .terminal {
+            height: 100%;
             border-radius: 18px;
             overflow: hidden;
             background: rgba(10, 6, 18, 0.85);
@@ -336,7 +332,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            padding: 12px 16px;
+            padding: 10px 16px;
             background: rgba(124, 58, 237, 0.15);
             border-bottom: 1px solid rgba(168, 85, 247, 0.25);
         }
@@ -359,26 +355,23 @@
         }
  
         .t-body {
-            padding: 22px 22px 26px;
-            min-height: 420px;
+            padding: 18px 20px;
             font-family: Consolas, "Courier New", monospace;
-            font-size: 15px;
-            line-height: 1.7;
+            font-size: 14px;
+            line-height: 1.6;
             color: #e9d5ff;
         }
  
         .ln {
             white-space: pre-wrap;
             word-break: break-word;
-            min-height: 1.7em;
+            min-height: 1.6em;
         }
  
         .p { color: #a855f7; }
         .k { color: #c084fc; }
         .s { color: #f0abfc; }
         .n { color: #67e8f9; }
-        .h { color: #fbbf24; }
-        .hd { color: #86efac; }
  
         .caret {
             display: inline-block;
@@ -391,7 +384,7 @@
         }
  
         .player {
-            padding: 26px;
+            padding: 20px 24px;
             border-radius: 22px;
             background: linear-gradient(160deg, rgba(40, 18, 82, 0.75), rgba(10, 6, 18, 0.85));
             border: 1px solid rgba(168, 85, 247, 0.45);
@@ -408,8 +401,8 @@
  
         .avatar {
             flex: 0 0 auto;
-            width: 78px;
-            height: 78px;
+            width: 70px;
+            height: 70px;
             border-radius: 50%;
             overflow: hidden;
             border: 3px solid #a855f7;
@@ -433,9 +426,9 @@
         }
  
         .p-head h3 {
-            font-size: 20px;
+            font-size: 19px;
             line-height: 1.2;
-            margin: 4px 0 8px;
+            margin: 3px 0 6px;
         }
  
         .badge {
@@ -453,7 +446,7 @@
             display: flex;
             align-items: center;
             gap: 14px;
-            margin: 26px 0 22px;
+            margin: 16px 0 10px;
             font-family: Consolas, "Courier New", monospace;
             font-size: 14px;
             font-weight: 700;
@@ -492,7 +485,7 @@
             display: flex;
             justify-content: space-between;
             gap: 14px;
-            padding: 12px 0;
+            padding: 8px 0;
             border-bottom: 1px dashed rgba(168, 85, 247, 0.25);
             font-size: 14px;
         }
@@ -513,12 +506,12 @@
         }
  
         .inv {
-            margin-top: 20px;
+            margin-top: 10px;
         }
  
         .inv small {
             display: block;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             font-family: Consolas, "Courier New", monospace;
             font-size: 11px;
             letter-spacing: 2px;
@@ -527,8 +520,8 @@
  
         .chip {
             display: inline-block;
-            margin: 0 6px 8px 0;
-            padding: 6px 14px;
+            margin: 0 6px 6px 0;
+            padding: 5px 12px;
             border-radius: 10px;
             font-family: Consolas, "Courier New", monospace;
             font-size: 13px;
@@ -543,162 +536,8 @@
             box-shadow: 0 0 16px rgba(168, 85, 247, 0.7);
         }
  
-        /* ---------- Stats ---------- */
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-            margin-top: 70px;
-        }
- 
-        .stat {
-            padding: 30px 26px;
-            border-radius: 20px;
-            text-align: center;
-            background: rgba(20, 8, 43, 0.5);
-            border: 1px solid rgba(168, 85, 247, 0.3);
-            -webkit-backdrop-filter: blur(10px);
-            backdrop-filter: blur(10px);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
- 
-        .stat:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 0 30px rgba(168, 85, 247, 0.4);
-        }
- 
-        .stat b {
-            display: block;
-            font-size: clamp(40px, 6vw, 64px);
-            font-weight: 800;
-            line-height: 1.1;
-            text-shadow: 0 0 24px rgba(168, 85, 247, 0.7);
-        }
- 
-        .stat span {
-            display: block;
-            margin-top: 8px;
-            font-size: 13px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: #b79ae6;
-        }
- 
-        /* ---------- Journey timeline ---------- */
-        .journey {
-            margin-top: 90px;
-        }
- 
-        .journey h2 {
-            font-size: clamp(30px, 5vw, 48px);
-            margin-bottom: 8px;
-            text-shadow: 0 0 24px rgba(168, 85, 247, 0.5);
-        }
- 
-        .bar {
-            width: 90px;
-            height: 5px;
-            border-radius: 3px;
-            margin-bottom: 44px;
-            background: linear-gradient(90deg, #a855f7, #5b21b6, #a855f7);
-            background-size: 200% 100%;
-            box-shadow: 0 0 14px rgba(168, 85, 247, 0.8);
-            animation: barFlow 3s linear infinite;
-        }
- 
-        .timeline {
-            position: relative;
-            padding-left: 40px;
-        }
- 
-        .timeline::before {
-            content: "";
-            position: absolute;
-            left: 9px;
-            top: 6px;
-            bottom: 6px;
-            width: 2px;
-            background: linear-gradient(180deg, #a855f7, rgba(168, 85, 247, 0.05));
-        }
- 
-        .node {
-            position: relative;
-            margin-bottom: 38px;
-        }
- 
-        .node:last-child {
-            margin-bottom: 0;
-        }
- 
-        .node::before {
-            content: "";
-            position: absolute;
-            left: -40px;
-            top: 5px;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: #0a0612;
-            border: 3px solid #a855f7;
-            box-shadow: 0 0 16px rgba(168, 85, 247, 0.9);
-            animation: nodePulse 2.4s ease-in-out infinite;
-        }
- 
-        .node small {
-            font-family: Consolas, "Courier New", monospace;
-            font-size: 12px;
-            letter-spacing: 2px;
-            color: #a855f7;
-        }
- 
-        .node h4 {
-            font-size: 22px;
-            margin: 6px 0;
-        }
- 
-        .node p {
-            max-width: 560px;
-            line-height: 1.6;
-            color: #cbb6f2;
-        }
- 
-        /* ---------- Footer ---------- */
         .foot {
-            margin-top: 100px;
             text-align: center;
-        }
- 
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            padding: 15px 32px;
-            border-radius: 999px;
-            color: #ffffff;
-            font-size: 16px;
-            font-weight: 700;
-            text-decoration: none;
-            background: linear-gradient(135deg, #7c3aed, #5b21b6);
-            box-shadow: 0 0 26px rgba(168, 85, 247, 0.6);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
- 
-        .btn:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 0 40px rgba(168, 85, 247, 0.95);
-        }
- 
-        .btn span {
-            display: inline-block;
-            transition: transform 0.3s ease;
-        }
- 
-        .btn:hover span {
-            transform: translateX(-6px);
-        }
- 
-        .foot p {
-            margin-top: 26px;
             font-family: Consolas, "Courier New", monospace;
             font-size: 13px;
             color: #8f73c7;
@@ -771,40 +610,54 @@
             to { background-position: -200% 0; }
         }
  
-        @keyframes nodePulse {
-            0%, 100% { box-shadow: 0 0 10px rgba(168, 85, 247, 0.7); }
-            50%      { box-shadow: 0 0 24px rgba(216, 180, 254, 1); }
-        }
- 
         /* =====================================================
-           MOBILE
+           SMALLER SCREENS (still no scrolling)
            ===================================================== */
         @media (max-width: 800px) {
             .page {
-                padding: 110px 6vw 70px;
+                padding: 76px 5vw 14px;
+                justify-content: flex-start;
             }
  
+            /* the terminal is hidden so everything fits one phone screen */
             .duo {
                 grid-template-columns: 1fr;
-                margin-top: 50px;
             }
  
-            .t-body {
-                min-height: 380px;
-                font-size: 13px;
-            }
- 
-            .stats {
-                grid-template-columns: 1fr;
-                margin-top: 50px;
-            }
- 
-            .ghost {
-                font-size: 34vw;
+            .terminal {
+                display: none;
             }
  
             .orb {
                 filter: blur(70px);
+            }
+        }
+ 
+        @media (max-height: 640px) {
+            .hero .tag {
+                display: none;
+            }
+ 
+            .rows li {
+                padding: 5px 0;
+                font-size: 13px;
+            }
+ 
+            .level {
+                margin: 10px 0 6px;
+            }
+ 
+            .player {
+                padding: 14px 20px;
+            }
+ 
+            .t-body {
+                font-size: 12px;
+                padding: 12px 16px;
+            }
+ 
+            .foot {
+                display: none;
             }
         }
  
@@ -835,7 +688,7 @@
  
     <nav class="nav">
         <a href="index.html">Home</a>
-        <a href="about.html" class="active">About</a>
+        <a href="about.html" class="active">Personal Info</a>
     </nav>
  
     <!-- Background -->
@@ -843,7 +696,7 @@
         <div class="px" data-depth="35"><div class="orb one"></div></div>
         <div class="px" data-depth="-30"><div class="orb two"></div></div>
         <div class="px" data-depth="55"><div class="orb three"></div></div>
-        <div class="px" data-depth="-22"><div class="ghost">ABOUT</div></div>
+        <div class="px" data-depth="-22"><div class="ghost">INFO</div></div>
         <div class="grid"></div>
         <div class="spotlight" id="spotlight"></div>
         <div class="particles" id="particles"></div>
@@ -851,16 +704,9 @@
  
     <main class="page">
  
-        <!-- Intro -->
         <header class="hero reveal">
-            <p class="tag">// about me</p>
-            <h1>Hello, <em>World</em><span class="blink">_</span></h1>
-            <p class="lead">
-                I'm <strong>Caranto John Marvian P</strong>, an
-                <strong>18-year-old IT student</strong> at the
-                <strong>University of the Cordilleras</strong>, born in Pangasinan
-                and always learning, building and leveling up.
-            </p>
+            <p class="tag">// personal info</p>
+            <h1>Personal <em>Info</em><span class="blink">_</span></h1>
         </header>
  
         <!-- Terminal + player card -->
@@ -892,12 +738,12 @@
                     </div>
  
                     <ul class="rows">
+                        <li><b>Birthday</b><span>March 14, 2008</span></li>
+                        <li><b>Age</b><span>18 years old</span></li>
                         <li><b>Spawn point</b><span>Pangasinan</span></li>
                         <li><b>Current map</b><span>University of the Cordilleras</span></li>
                         <li><b>Main quest</b><span>Finish my IT degree</span></li>
                         <li><b>Side quest</b><span>Build my portfolio</span></li>
-                        <!-- Add more rows here, for example:
-                        <li><b>Hobby</b><span>Your hobby</span></li> -->
                     </ul>
  
                     <div class="inv">
@@ -906,50 +752,12 @@
                         <span class="chip">CSS</span>
                         <span class="chip">JavaScript</span>
                         <span class="chip">GitHub</span>
-                        <!-- Add more skills as chips: <span class="chip">Python</span> -->
                     </div>
                 </aside>
             </div>
         </section>
  
-        <!-- Stats -->
-        <section class="stats">
-            <div class="stat reveal"><b data-count="18">0</b><span>Years old</span></div>
-            <div class="stat reveal"><b data-count="1">0</b><span>Portfolio live</span></div>
-            <div class="stat reveal"><b>&infin;</b><span>Things left to learn</span></div>
-        </section>
- 
-        <!-- Journey -->
-        <section class="journey">
-            <h2 class="reveal">My Journey</h2>
-            <div class="bar reveal"></div>
- 
-            <div class="timeline">
-                <div class="node reveal">
-                    <small>SPAWNED</small>
-                    <h4>Born in Pangasinan</h4>
-                    <p>Where my story started.</p>
-                </div>
-                <div class="node reveal">
-                    <small>LEVELING UP</small>
-                    <h4>IT student at the University of the Cordilleras</h4>
-                    <p>Learning new skills one subject at a time.</p>
-                </div>
-                <div class="node reveal">
-                    <small>SHIPPED</small>
-                    <h4>Built this portfolio</h4>
-                    <p>Hand-coded with HTML, CSS and JavaScript, and hosted on GitHub.</p>
-                </div>
-                <div class="node reveal">
-                    <small>LOADING...</small>
-                    <h4>What's next</h4>
-                    <p>More projects and more pages are on the way.</p>
-                </div>
-            </div>
-        </section>
- 
         <footer class="foot reveal">
-            <a class="btn" href="index.html"><span>&larr;</span> Back home</a>
             <p>&lt;/&gt; coded by Caranto John Marvian P</p>
         </footer>
     </main>
@@ -968,18 +776,15 @@
             var steps = [
                 { cmd: "whoami" },
                 { out: "Caranto John Marvian P" },
-                { cmd: "cat about.json" },
+                { cmd: "cat info.json" },
                 { out: "{" },
+                { out: '  <span class="k">"name"</span>: <span class="s">"Caranto John Marvian P"</span>,' },
+                { out: '  <span class="k">"birthday"</span>: <span class="s">"March 14, 2008"</span>,' },
                 { out: '  <span class="k">"age"</span>: <span class="n">18</span>,' },
                 { out: '  <span class="k">"born"</span>: <span class="s">"Pangasinan, Philippines"</span>,' },
                 { out: '  <span class="k">"school"</span>: <span class="s">"University of the Cordilleras"</span>,' },
-                { out: '  <span class="k">"field"</span>: <span class="s">"Information Technology"</span>,' },
-                { out: '  <span class="k">"status"</span>: <span class="s">"learning, building, leveling up"</span>' },
-                { out: "}" },
-                { cmd: "git log --oneline" },
-                { out: '<span class="h">c40d9ee</span> <span class="hd">(HEAD -> main)</span> Built my first portfolio' },
-                { out: '<span class="h">b72e4d8</span> Started IT at University of the Cordilleras' },
-                { out: '<span class="h">a1f03c9</span> Born in Pangasinan' }
+                { out: '  <span class="k">"field"</span>: <span class="s">"Information Technology"</span>' },
+                { out: "}" }
             ];
  
             function sleep(ms) {
@@ -1042,50 +847,13 @@
             }
         })();
  
-        // Reveal on scroll + number count-up
+        // Reveal (everything is on one screen, so it all fades in on load)
         (function () {
-            function countUp(el) {
-                var end = parseInt(el.getAttribute("data-count"), 10);
-                var start = null;
- 
-                if (reduceMotion) {
-                    el.textContent = end;
-                    return;
-                }
- 
-                function step(t) {
-                    if (!start) start = t;
-                    var p = Math.min((t - start) / 1200, 1);
-                    el.textContent = Math.round(end * (1 - Math.pow(1 - p, 3)));
-                    if (p < 1) requestAnimationFrame(step);
-                }
- 
-                requestAnimationFrame(step);
-            }
- 
-            function show(el) {
-                el.classList.add("in");
-                var num = el.querySelector("[data-count]");
-                if (num) countUp(num);
-            }
- 
             var items = document.querySelectorAll(".reveal");
  
-            if (!("IntersectionObserver" in window)) {
-                items.forEach(show);
-                return;
-            }
- 
-            var io = new IntersectionObserver(function (entries) {
-                entries.forEach(function (entry) {
-                    if (entry.isIntersecting) {
-                        show(entry.target);
-                        io.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.15 });
- 
-            items.forEach(function (el) { io.observe(el); });
+            items.forEach(function (el, i) {
+                setTimeout(function () { el.classList.add("in"); }, reduceMotion ? 0 : 150 + i * 150);
+            });
         })();
  
         // Depth: layers move with the mouse, player card tilts, custom cursor (desktop only)
@@ -1128,7 +896,7 @@
             });
  
             document.addEventListener("mouseover", function (e) {
-                ring.classList.toggle("big", !!e.target.closest("a, .player, .terminal, .stat, .chip"));
+                ring.classList.toggle("big", !!e.target.closest("a, .player, .terminal, .chip"));
             });
  
             player.addEventListener("mousemove", function (e) {
@@ -1163,11 +931,11 @@
             tick();
         })();
  
-        // Page transition when using the menu or buttons
+        // Page transition when using the menu
         (function () {
             var wipe = document.getElementById("wipe");
  
-            document.querySelectorAll(".nav a, .btn").forEach(function (link) {
+            document.querySelectorAll(".nav a").forEach(function (link) {
                 link.addEventListener("click", function (e) {
                     if (e.metaKey || e.ctrlKey || e.shiftKey || reduceMotion) return;
  
@@ -1185,7 +953,6 @@
                 });
             });
  
-            // Coming back with the browser's Back button
             window.addEventListener("pageshow", function (e) {
                 if (e.persisted) {
                     wipe.style.transition = "none";
