@@ -18,17 +18,24 @@
             box-sizing: border-box;
         }
  
+        /* No scrolling: the page is exactly one screen tall */
+        html,
         body {
-            min-height: 100vh;
+            height: 100%;
+            overflow: hidden;
+        }
+ 
+        body {
+            height: 100vh;
+            height: 100dvh;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 100px 6vw 60px;
+            padding: 84px 6vw 24px;
             background: linear-gradient(120deg, #050507, #14082b, #07030f, #1d0b3d, #050507);
             background-size: 300% 300%;
             animation: bgShift 18s ease-in-out infinite;
             font-family: Arial, Helvetica, sans-serif;
-            overflow-x: hidden;
             position: relative;
         }
  
@@ -414,10 +421,13 @@
             gap: 6vw;
         }
  
-        /* ---------- Photo stage (left, big) ---------- */
+        /* ---------- Photo stage (left, big) ----------
+           The photo is 3:4, so its width is capped by the screen height
+           as well. That keeps the whole page on one screen. */
         .stage {
             flex: 0 0 auto;
-            width: min(46vw, 520px);
+            width: min(46vw, 520px, calc((100vh - 190px) * 0.75));
+            width: min(46vw, 520px, calc((100dvh - 190px) * 0.75));
             position: relative;
         }
  
@@ -839,20 +849,22 @@
         }
  
         /* =====================================================
-           MOBILE
+           MOBILE (still no scrolling)
            ===================================================== */
         @media (max-width: 800px) {
             body {
-                padding: 100px 6vw 70px;
+                padding: 84px 6vw 24px;
             }
  
             .profile {
                 flex-direction: column;
-                gap: 60px;
+                gap: 40px;
             }
  
+            /* leaves room for the name, the gap and the floor shadow */
             .stage {
-                width: min(76vw, 400px);
+                width: min(76vw, 400px, calc((100vh - 360px) * 0.75));
+                width: min(76vw, 400px, calc((100dvh - 360px) * 0.75));
             }
  
             .ghost {
@@ -906,10 +918,10 @@
     <div class="wipe" id="wipe"></div>
  
     <nav class="nav">
-    <a href="index.html" class="active">Home</a>
-    <a href="about.html">Personal Info</a>
-    <a href="achievements.html">Achievements</a>
-</nav>
+        <a href="index.html" class="active">Home</a>
+        <a href="about.html">Personal Info</a>
+        <a href="achievements.html">Achievements</a>
+    </nav>
  
     <!-- Far background layers -->
     <div class="bg" aria-hidden="true">
