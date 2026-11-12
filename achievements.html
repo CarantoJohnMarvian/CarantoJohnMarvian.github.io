@@ -260,9 +260,9 @@
             position: relative;
             z-index: 2;
             height: 100%;
-            max-width: 1100px;
+            max-width: 1320px;
             margin: 0 auto;
-            padding: 84px 6vw 20px;
+            padding: 84px 3vw 20px;
             display: flex;
             flex-direction: column;
             gap: clamp(12px, 2.5vh, 26px);
@@ -289,7 +289,7 @@
         }
  
         .hero h1 {
-            font-size: clamp(30px, min(6.5vw, 8vh), 70px);
+            font-size: clamp(30px, min(5.5vw, 7vh), 60px);
             font-weight: 800;
             line-height: 1.05;
             letter-spacing: 1px;
@@ -314,9 +314,11 @@
         .cards {
             flex: 1;
             min-height: 0;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            display: flex;
+            justify-content: center;
+            align-items: center;
             gap: 22px;
+            container-type: size;
         }
  
         .cards > .reveal {
@@ -387,8 +389,12 @@
             display: flex;
         }
  
+        /* Same text-area height on every card, so every photo is the same size */
         .info {
+            flex: 0 0 var(--info, 184px);
             padding: 16px 20px 18px;
+            display: flex;
+            flex-direction: column;
         }
  
         .info small {
@@ -407,14 +413,15 @@
         }
  
         .info p {
-            font-size: 13px;
+            font-size: 12.5px;
             line-height: 1.5;
             color: #cbb6f2;
         }
  
+        /* Pinned to the bottom so all badges line up */
         .badge {
-            display: inline-block;
-            margin-top: 10px;
+            align-self: flex-start;
+            margin-top: auto;
             padding: 4px 12px;
             border-radius: 999px;
             font-size: 12px;
@@ -429,6 +436,34 @@
             font-family: Consolas, "Courier New", monospace;
             font-size: 13px;
             color: #8f73c7;
+        }
+ 
+        /* =====================================================
+           DESKTOP: all three photos share one height and each card is as
+           wide as its photo, so nothing gets cropped.
+           Aspect ratios: grad 0.5625 + dance 1.3333 + bench 0.75 = 2.6458
+           ===================================================== */
+        @media (min-width: 801px) {
+            .cards {
+                --gap: 22px;
+                --info: 184px;
+                --ph: max(140px, min(calc(100cqh - var(--info)), calc((100cqw - 2 * var(--gap)) / 2.6458)));
+                gap: var(--gap);
+            }
+ 
+            .cards > .reveal {
+                flex: none;
+                width: max(calc(var(--ph) * var(--ar)), 236px);
+            }
+ 
+            .card {
+                height: auto;
+            }
+ 
+            .shot {
+                flex: none;
+                height: var(--ph);
+            }
         }
  
         /* =====================================================
@@ -509,8 +544,10 @@
  
             /* three compact rows: photo on the left, text on the right */
             .cards {
+                display: grid;
                 grid-template-columns: 1fr;
                 grid-template-rows: repeat(3, minmax(0, 1fr));
+                align-items: stretch;
                 gap: 12px;
             }
  
@@ -619,11 +656,11 @@
  
         <section class="cards">
  
-            <div class="reveal">
+            <div class="reveal" style="--ar: 0.5625;">
                 <article class="card">
                     <div class="shot">
-                        <img data-photo="grad pic" alt="Graduation at VMUF Senior High School">
-                        <div class="missing">add "grad pic" photo</div>
+                        <img data-photo="grad_pic" style="object-position: 50% 70%;" alt="Graduation at VMUF Senior High School">
+                        <div class="missing">add grad_pic.jpg</div>
                     </div>
                     <div class="info">
                         <small>ACHIEVEMENT 01</small>
@@ -634,11 +671,11 @@
                 </article>
             </div>
  
-            <div class="reveal">
+            <div class="reveal" style="--ar: 1.3333;">
                 <article class="card">
                     <div class="shot">
-                        <img data-photo="dance pic" alt="Dance competition group in traditional costumes">
-                        <div class="missing">add "dance pic" photo</div>
+                        <img data-photo="dance_pic" style="object-position: 50% 25%;" alt="Dance competition group in traditional costumes">
+                        <div class="missing">add dance_pic.jpg</div>
                     </div>
                     <div class="info">
                         <small>ACHIEVEMENT 02</small>
@@ -649,11 +686,11 @@
                 </article>
             </div>
  
-            <div class="reveal">
+            <div class="reveal" style="--ar: 0.75;">
                 <article class="card">
                     <div class="shot">
-                        <img data-photo="bench pic" alt="Champion certificate for the Bench Yell Competition">
-                        <div class="missing">add "bench pic" photo</div>
+                        <img data-photo="bench_pic" style="object-position: 50% 45%;" alt="Champion certificate for the Bench Yell Competition">
+                        <div class="missing">add bench_pic.jpg</div>
                     </div>
                     <div class="info">
                         <small>ACHIEVEMENT 03</small>
@@ -678,10 +715,10 @@
     <script>
         var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
  
-        // Load each photo by name. It tries the common image extensions,
-        // so "grad pic" works whether the file is .jpg, .jpeg, .png or .webp
+        // Load each photo by name. For "grad_pic" it tries grad_pic.jpg first,
+        // then grad_pic_jpg.jfif (the original upload), then other extensions.
         (function () {
-            var exts = [".jpg", ".jpeg", ".png", ".webp", ".JPG", ".JPEG", ".PNG"];
+            var exts = [".jpg", "_jpg.jfif", ".jpeg", ".png", ".webp", ".jfif", ".JPG", ".JPEG", ".PNG"];
  
             document.querySelectorAll("img[data-photo]").forEach(function (img) {
                 var name = img.getAttribute("data-photo");
