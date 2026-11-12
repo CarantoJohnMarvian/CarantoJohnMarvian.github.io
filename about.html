@@ -49,6 +49,7 @@
             backdrop-filter: blur(12px);
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(139, 92, 246, 0.2);
             animation: navDrop 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) 0.2s backwards;
+            white-space: nowrap;
         }
  
         .nav a {
@@ -619,6 +620,11 @@
                 justify-content: flex-start;
             }
  
+            .nav a {
+                padding: 8px 12px;
+                font-size: 13px;
+            }
+ 
             /* the terminal is hidden so everything fits one phone screen */
             .duo {
                 grid-template-columns: 1fr;
@@ -689,6 +695,7 @@
     <nav class="nav">
         <a href="index.html">Home</a>
         <a href="about.html" class="active">Personal Info</a>
+        <a href="achievements.html">Achievements</a>
     </nav>
  
     <!-- Background -->
