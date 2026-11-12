@@ -715,21 +715,29 @@
     <script>
         var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
  
-        // Load each photo by name. For "grad_pic" it tries grad_pic.jpg first,
-        // then grad_pic_jpg.jfif (the original upload), then other extensions.
+        // Load each photo by name. For "grad_pic" it tries every combination of
+        // grad_pic / "grad pic" with .jpg, _jpg.jfif and other extensions,
+        // so it works with files named either way.
         (function () {
             var exts = [".jpg", "_jpg.jfif", ".jpeg", ".png", ".webp", ".jfif", ".JPG", ".JPEG", ".PNG"];
  
             document.querySelectorAll("img[data-photo]").forEach(function (img) {
-                var name = img.getAttribute("data-photo");
+                var base = img.getAttribute("data-photo");
+                var names = [base, base.replace(/_/g, " ")];
+                var list = [];
+ 
+                names.forEach(function (n) {
+                    exts.forEach(function (e) { list.push(n + e); });
+                });
+ 
                 var i = 0;
  
                 function tryNext() {
-                    if (i >= exts.length) {
+                    if (i >= list.length) {
                         img.parentNode.classList.add("nofile");
                         return;
                     }
-                    img.src = encodeURIComponent(name) + exts[i++];
+                    img.src = encodeURIComponent(list[i++]);
                 }
  
                 img.addEventListener("error", tryNext);
