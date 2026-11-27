@@ -738,6 +738,52 @@
             .nav { gap: 2px; padding: 5px; }
             .nav a { padding: 8px 8px; font-size: 11.5px; letter-spacing: 0; }
         }
+        /* Previous / next page arrows */
+        .arrow {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 8;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #d8b4fe;
+            text-decoration: none;
+            border-radius: 50%;
+            background: rgba(20, 8, 43, 0.55);
+            border: 1px solid rgba(168, 85, 247, 0.35);
+            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(139, 92, 246, 0.2);
+            transition: background 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .arrow.prev { left: 10px; }
+        .arrow.next { right: 10px; }
+
+        .arrow:hover,
+        .arrow:focus-visible {
+            color: #ffffff;
+            background: linear-gradient(135deg, #7c3aed, #5b21b6);
+            box-shadow: 0 0 16px rgba(168, 85, 247, 0.6);
+            outline: none;
+        }
+
+        /* on narrower screens the arrows sit in the top row, beside the menu */
+        @media (max-width: 900px) {
+            .arrow {
+                top: 18px;
+                transform: none;
+                width: 36px;
+                height: 36px;
+            }
+
+            .arrow svg { width: 18px; height: 18px; }
+            .arrow.prev { left: 6px; }
+            .arrow.next { right: 6px; }
+        }
     </style>
 </head>
 <body>
@@ -745,11 +791,17 @@
     <div class="wipe" id="wipe"></div>
  
     <nav class="nav">
-        <a href="index.html">Home</a>
         <a href="about.html" class="active">Personal Info</a>
         <a href="achievements.html">Achievements</a>
         <a href="family-and-friends.html">Family &amp; Friends</a>
     </nav>
+
+    <a class="arrow prev" href="index.html" aria-label="Previous page">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 5 8 12 15 19"/></svg>
+    </a>
+    <a class="arrow next" href="achievements.html" aria-label="Next page">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 5 16 12 9 19"/></svg>
+    </a>
  
     <!-- Background -->
     <div class="bg" aria-hidden="true">
@@ -1001,7 +1053,7 @@
         (function () {
             var wipe = document.getElementById("wipe");
  
-            document.querySelectorAll(".nav a").forEach(function (link) {
+            document.querySelectorAll(".nav a, .arrow").forEach(function (link) {
                 link.addEventListener("click", function (e) {
                     if (e.metaKey || e.ctrlKey || e.shiftKey || reduceMotion) return;
  
