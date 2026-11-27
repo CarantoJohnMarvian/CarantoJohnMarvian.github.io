@@ -506,6 +506,26 @@
             color: #ffffff;
         }
  
+        /* Clickable email + phone links */
+        .rows a {
+            color: #d8b4fe;
+            text-decoration: none;
+            word-break: break-all;
+            border-bottom: 1px dotted rgba(216, 180, 254, 0.6);
+            transition: color 0.25s ease, text-shadow 0.25s ease;
+        }
+ 
+        .rows a:hover {
+            color: #ffffff;
+            text-shadow: 0 0 12px rgba(168, 85, 247, 0.9);
+        }
+ 
+        .rows a:focus-visible {
+            outline: 2px solid #c084fc;
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
+ 
         .inv {
             margin-top: 10px;
         }
@@ -667,6 +687,33 @@
             }
         }
  
+        /* tighter rows so the two new contact rows still fit one screen */
+        @media (max-height: 820px) {
+            .rows li {
+                padding: 4px 0;
+                font-size: 13px;
+            }
+ 
+            .level {
+                margin: 10px 0 6px;
+            }
+ 
+            .player {
+                padding: 14px 20px;
+            }
+ 
+            .inv {
+                margin-top: 6px;
+            }
+        }
+ 
+        @media (max-height: 640px) {
+            .rows li {
+                padding: 3px 0;
+                font-size: 12.5px;
+            }
+        }
+ 
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after {
                 animation: none !important;
@@ -755,6 +802,8 @@
                         <li><b>Age</b><span>18 years old</span></li>
                         <li><b>Height</b><span>5'7"</span></li>
                         <li><b>Eye color</b><span>Brown</span></li>
+                        <li><b>Email</b><span><a href="mailto:johnmarviancaranto@gmail.com">johnmarviancaranto@gmail.com</a></span></li>
+                        <li><b>Phone</b><span><a href="tel:+639487963722">0948 796 3722</a></span></li>
                         <li><b>Spawn point</b><span>Pangasinan</span></li>
                         <li><b>Current map</b><span>University of the Cordilleras</span></li>
                         <li><b>Main quest</b><span>Finish my IT degree</span></li>
